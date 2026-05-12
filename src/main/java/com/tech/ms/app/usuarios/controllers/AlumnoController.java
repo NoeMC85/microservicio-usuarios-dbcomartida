@@ -1,6 +1,7 @@
 package com.tech.ms.app.usuarios.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.core.io.ByteArrayResource;
@@ -27,8 +28,14 @@ import jakarta.validation.Valid;
 @RestController
 public class AlumnoController extends CommonController<Alumno, AlumnoService>  {
 	
+	@GetMapping("/alumnos-por-curso")
+	public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids) {
+		return ResponseEntity.ok().body(service.findAllById(ids));
+		
+	}
+	
 	@GetMapping("/uploads/img/{id}")
-	public ResponseEntity<?> verFoto(@PathVariable Long id){
+	public ResponseEntity<?> verFoto(@PathVariable Long id) {
 		Optional<Alumno> o = service.findById(id);
 		if(o.isEmpty() || o.get().getFoto() == null) {
 			return ResponseEntity.notFound().build();

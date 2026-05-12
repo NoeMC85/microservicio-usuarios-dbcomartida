@@ -9,7 +9,7 @@ import com.tech.ms.commons.alumnos.models.entity.Alumno;
 
 public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 
-	@Query("select a from Alumno a where a.name like %?1% or a.apellido like %?1%")
+	@Query("select a from Alumno a where upper(a.name) like upper(concat('%',?1,'%')) or upper(a.apellido) like upper(concat('%',?1,'%'))")
 	public List<Alumno> findByNombreOrApellido(String parametro);
 	
 }
